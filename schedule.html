@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Us Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            color: #4a4a4a;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+        
+        .back-btn {
+            background-color: #6e8efb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .back-btn:hover {
+            background-color: #5d7ce0;
+            transform: translateY(-2px);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4a4a4a;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #6e8efb;
+            outline: none;
+        }
+        
+        .date-time-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .date-time-group > div {
+            flex: 1;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .time-slot {
+            background-color: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .time-slot:hover {
+            border-color: #6e8efb;
+            background-color: #e8eeff;
+        }
+        
+        .time-slot.selected {
+            background-color: #6e8efb;
+            color: white;
+            border-color: #6e8efb;
+        }
+        
+        @media (max-width: 600px) {
+            .date-time-group {
+
+flex-direction: column;
+                gap: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+        
+        <h1>Schedule an Appointment</h1>
+        
+        <form id="scheduleForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Service Type</label>
+                <select id="service" name="service" required>
+                    <option value="" disabled selected>Select a service</option>
+                    <option value="consultation">Initial Consultation</option>
+                    <option value="followup">Follow-up Session</option>
+                    <option value="assessment">Comprehensive Assessment</option>
+                    <option value="therapy">Therapy Session</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Preferred Date</label>
+                <input type="date" id="date" name="date" required min="">
+            </div>
+            
+            <div class="form-group">
+                <label>Available Time Slots</label>
+                <div class="time-slots">
+                    <div class="time-slot" onclick="selectTimeSlot(this)">9:00 AM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">10:00 AM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">11:00 AM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">1:00 PM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">2:00 PM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">3:00 PM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">4:00 PM</div>
+                    <div class="time-slot" onclick="selectTimeSlot(this)">5:00 PM</div>
+                </div>
+                <input type="hidden" id="selectedTime" name="selectedTime">
+            </div>
+            
+            <div class="form-group">
+                <label for="notes">Additional Notes</label>
+                <textarea id="notes" name="notes" rows="4"></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Schedule Now</button>
+        </form>
+    </div>
+
+    <script>
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').min = today;
+        
+        // Time slot selection
+        function selectTimeSlot(slot) {
+            // Remove selected class from all slots
+            document.querySelectorAll('.time-slot').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked slot
+            slot.classList.add('selected');
+            
+            // Update hidden input with selected time
+            document.getElementById('selectedTime').value = slot.textContent;
+
+}
+        
+        // Form submission
+        document.getElementById('scheduleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!document.getElementById('selectedTime').value) {
+                alert('Please select a time slot');
+                return;
+            }
+            
+            alert('Appointment scheduled! We will confirm your appointment soon.');
+            // In a real application, you would send this data to your server
+        });
+    </script>
+</body>
+</html>
